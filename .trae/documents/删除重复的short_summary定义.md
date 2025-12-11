@@ -1,5 +1,0 @@
-1. 删除handleGenerateChapter函数中第376行的重复short_summary定义
-2. 删除generateFullPrompt函数中第613行的重复short_summary定义
-3. 重新构建项目，验证警告是否消除
-
-这些修改将消除构建警告，使代码更简洁，同时不影响功能。

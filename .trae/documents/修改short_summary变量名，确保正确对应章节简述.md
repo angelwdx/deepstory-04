@@ -1,5 +1,0 @@
-1. 修改generateFullPrompt函数中第612行的short_summary定义
-2. 将short_summary: chapterSummary改为short_summary: shortSummary
-3. 重新构建项目，验证修改是否正确
-
-这个修改将纠正变量名的错误使用，确保short_summary正确对应章节蓝图中的本章简述字段。
