@@ -49,7 +49,7 @@ export default function App() {
 
     const [apiConfig, setApiConfig] = useState<ApiConfig>({
         provider: 'google',
-        baseUrl: 'https://generativelanguage.googleapis.com',
+        baseUrl: 'https://gemini.txtbg.cn',
         apiKey: '',
         textModel: 'gemini-2.5-flash'
     });
