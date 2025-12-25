@@ -1914,8 +1914,8 @@ export default function App() {
                         alt="Art Mind"
                         className="w-16 h-16 rounded-full mb-3 shadow-sm grayscale hover:grayscale-0 transition-all duration-500"
                     />
-                    <h1 className="font-serif text-xl font-bold tracking-wider text-gray-900">Art Mind <span className="text-gray-400 font-light text-sm align-top">3.0</span></h1>
-                    <p className="font-hand text-gray-400 text-lg -rotate-2 mt-1">由 AI 驱动的深度美学叙事</p>
+                    <h1 className="font-serif text-xl font-bold tracking-wider text-gray-900">Story Mind <span className="text-gray-400 font-light text-sm align-top">3.0</span></h1>
+                    <p className="font-hand text-gray-400 text-lg -rotate-2 mt-1">智能小说创作系统</p>
                 </div>
 
                 <div className="flex-1 overflow-y-auto px-4 py-6 space-y-1">
