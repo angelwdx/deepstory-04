@@ -1299,19 +1299,19 @@ export default function App() {
                         </div>
                     </div>
 
-                    <div className="bg-white border border-gray-100 rounded-xl p-6 sm:p-8 shadow-sm space-y-8">
+                    <div className="bg-white border border-gray-100 rounded-xl p-5 sm:p-6 shadow-sm space-y-6">
                         <div>
-                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center">
+                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center">
                                 <List size={14} className="mr-2" />
                                 Basic Settings
                             </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2 font-serif">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1.5 font-serif">
                                         题材分类 (Genre)
                                     </label>
                                     <select
-                                        className="w-full bg-gray-50 border-0 rounded-lg p-3 text-gray-900 focus:ring-1 focus:ring-black outline-none transition-all appearance-none"
+                                        className="w-full bg-gray-50 border-0 rounded-lg p-2.5 text-gray-900 text-sm focus:ring-1 focus:ring-black outline-none transition-all appearance-none"
                                         value={inputs.genre}
                                         onChange={(e) => setInputs(prev => ({ ...prev, genre: e.target.value }))}
                                     >
@@ -1325,11 +1325,11 @@ export default function App() {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2 font-serif">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1.5 font-serif">
                                         叙事视角
                                     </label>
                                     <select
-                                        className="w-full bg-gray-50 border-0 rounded-lg p-3 text-gray-900 focus:ring-1 focus:ring-black outline-none transition-all"
+                                        className="w-full bg-gray-50 border-0 rounded-lg p-2.5 text-gray-900 text-sm focus:ring-1 focus:ring-black outline-none transition-all"
                                         value={inputs.perspective}
                                         onChange={(e) => setInputs(prev => ({ ...prev, perspective: e.target.value }))}
                                     >
@@ -1338,11 +1338,11 @@ export default function App() {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2 font-serif">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1.5 font-serif">
                                         故事基调
                                     </label>
                                     <select
-                                        className="w-full bg-gray-50 border-0 rounded-lg p-3 text-gray-900 focus:ring-1 focus:ring-black outline-none transition-all"
+                                        className="w-full bg-gray-50 border-0 rounded-lg p-2.5 text-gray-900 text-sm focus:ring-1 focus:ring-black outline-none transition-all"
                                         value={inputs.tone}
                                         onChange={(e) => setInputs(prev => ({ ...prev, tone: e.target.value }))}
                                     >
@@ -1351,11 +1351,11 @@ export default function App() {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2 font-serif">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1.5 font-serif">
                                         结局倾向
                                     </label>
                                     <select
-                                        className="w-full bg-gray-50 border-0 rounded-lg p-3 text-gray-900 focus:ring-1 focus:ring-black outline-none transition-all"
+                                        className="w-full bg-gray-50 border-0 rounded-lg p-2.5 text-gray-900 text-sm focus:ring-1 focus:ring-black outline-none transition-all"
                                         value={inputs.ending}
                                         onChange={(e) => setInputs(prev => ({ ...prev, ending: e.target.value }))}
                                     >
@@ -1366,20 +1366,20 @@ export default function App() {
                             </div>
                         </div>
 
-                        <div className="pt-6 border-t border-gray-100">
-                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center">
+                        <div className="pt-5 border-t border-gray-100">
+                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center">
                                 <LayoutDashboard size={14} className="mr-2" />
                                 Requirements
                             </h3>
-                            <div className="space-y-6">
+                            <div className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2 font-serif">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1.5 font-serif">
                                         小说名称
                                     </label>
                                     <div className="flex gap-2">
                                         <input
                                             type="text"
-                                            className="flex-1 bg-gray-50 border-0 rounded-lg p-3 text-gray-900 focus:ring-1 focus:ring-black outline-none transition-all"
+                                            className="flex-1 bg-gray-50 border-0 rounded-lg p-2.5 text-gray-900 text-sm focus:ring-1 focus:ring-black outline-none transition-all"
                                             placeholder="输入小说名称或AI生成..."
                                             value={inputs.novelTitle}
                                             onChange={(e) => setInputs(prev => ({ ...prev, novelTitle: e.target.value }))}
@@ -1410,22 +1410,22 @@ export default function App() {
                                                 }
                                             }}
                                             disabled={isGenerating || !inputs.topic || !inputs.genre}
-                                            className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-lg transition-all disabled:opacity-50 text-sm font-medium"
+                                            className="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-lg transition-all disabled:opacity-50 text-sm font-medium"
                                         >
-                                            <Sparkles size={16} />
+                                            <Sparkles size={14} />
                                         </button>
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2 font-serif">
+                                        <label className="block text-sm font-medium text-gray-700 mb-1.5 font-serif">
                                             预计章节数
                                         </label>
                                         <input
                                             type="text"
                                             inputMode="numeric"
-                                            className="w-full bg-gray-50 border-0 rounded-lg p-3 text-gray-900 focus:ring-1 focus:ring-black outline-none transition-all"
+                                            className="w-full bg-gray-50 border-0 rounded-lg p-2.5 text-gray-900 text-sm focus:ring-1 focus:ring-black outline-none transition-all"
                                             value={inputs.numberOfChapters || ''}
                                             onChange={(e) => {
                                                 const value = e.target.value;
@@ -1435,13 +1435,13 @@ export default function App() {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2 font-serif">
+                                        <label className="block text-sm font-medium text-gray-700 mb-1.5 font-serif">
                                             每章字数
                                         </label>
                                         <input
                                             type="text"
                                             inputMode="numeric"
-                                            className="w-full bg-gray-50 border-0 rounded-lg p-3 text-gray-900 focus:ring-1 focus:ring-black outline-none transition-all"
+                                            className="w-full bg-gray-50 border-0 rounded-lg p-2.5 text-gray-900 text-sm focus:ring-1 focus:ring-black outline-none transition-all"
                                             value={inputs.wordCount || ''}
                                             onChange={(e) => {
                                                 const value = e.target.value;
@@ -1453,11 +1453,11 @@ export default function App() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2 font-serif">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1.5 font-serif">
                                         自定义特殊要求
                                     </label>
                                     <textarea
-                                        className="w-full min-h-[100px] bg-gray-50 border-0 rounded-lg p-3 text-gray-900 focus:ring-1 focus:ring-black outline-none resize-none transition-all"
+                                        className="w-full min-h-[80px] bg-gray-50 border-0 rounded-lg p-2.5 text-gray-900 text-sm focus:ring-1 focus:ring-black outline-none resize-none transition-all"
                                         placeholder="额外的设定要求..."
                                         value={inputs.customRequirements}
                                         onChange={(e) => setInputs(prev => ({ ...prev, customRequirements: e.target.value }))}
@@ -1478,9 +1478,9 @@ export default function App() {
                                 setCurrentStep(1);
                             }}
                             disabled={!inputs.topic.trim()}
-                            className="px-12 py-4 bg-black text-white font-bold rounded-full hover:shadow-xl hover:scale-105 transition-all disabled:opacity-50 disabled:hover:scale-100 flex items-center text-lg tracking-wide"
+                            className="px-8 py-3 bg-black text-white font-medium rounded-full hover:shadow-lg hover:scale-105 transition-all disabled:opacity-50 disabled:hover:scale-100 flex items-center text-sm tracking-wide"
                         >
-                            下一步：生成核心架构 <ArrowRight size={20} className="ml-2" />
+                            下一步：生成核心架构 <ArrowRight size={16} className="ml-2" />
                         </button>
                     </div>
                 </div>
