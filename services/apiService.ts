@@ -1,7 +1,7 @@
 import { ApiConfig } from "../types";
 
 // 定义模型类型
-type ModelType = 'gemini' | 'claude' | 'deepseek' | 'openai' | 'custom';
+type ModelType = 'gemini' | 'claude' | 'deepseek' | 'qwen' | 'openai' | 'custom';
 
 // 模型配置接口
 interface ModelConfig {
@@ -22,6 +22,8 @@ const getModelType = (baseUrl: string, provider?: string): ModelType => {
         return 'deepseek';
     } else if (provider === 'openai') {
         return 'openai';
+    } else if (provider === 'qwen') {
+        return 'qwen';
     }
 
     // 如果没有 provider 参数,则根据 URL 判断
@@ -33,6 +35,8 @@ const getModelType = (baseUrl: string, provider?: string): ModelType => {
         return 'deepseek';
     } else if (baseUrl.includes('openai.com')) {
         return 'openai';
+    } else if (baseUrl.includes('dashscope.aliyuncs.com')) {
+        return 'qwen';
     } else {
         return 'custom';
     }

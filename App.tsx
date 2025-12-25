@@ -49,7 +49,7 @@ export default function App() {
 
     const [apiConfig, setApiConfig] = useState<ApiConfig>({
         provider: 'google',
-        baseUrl: 'https://gemini.txtbg.cn',
+        baseUrl: 'https://generativelanguage.googleapis.com',
         apiKey: '',
         textModel: 'gemini-3-flash'
     });
@@ -1041,14 +1041,17 @@ export default function App() {
             const chapterText = currentChapter.content.length > maxChapterLength
                 ? `...${currentChapter.content.slice(-maxChapterLength)}`
                 : currentChapter.content;
-
             const variables = {
                 chapter_text: chapterText,
                 global_summary: generatedData.globalSummary || generatedData.dna || "暂无全局摘要",
                 character_state: generatedData.state || "暂无角色状态",
-                // 只传递当前章节相关的蓝图内容，避免上下文过多
+                // 只传递当前章节相关的蓝图内容，支持模糊搜索章节号
                 chapter_blueprint: generatedData.blueprint
-                    ? generatedData.blueprint.split('###').find(section => section.includes(`第${chapterNum}章`)) || "暂无当前章节蓝图"
+                    ? generatedData.blueprint.split(/###\s*第\s*\d+\s*章/).find((_, i, arr) => {
+                        const section = i > 0 ? arr[i] : "";
+                        // 这里尝试寻找包含当前章节号附近的内容
+                        return section.includes(`第${chapterNum}章`) || section.includes(`章名：${currentChapter.title}`);
+                    }) || "暂无当前章节蓝图"
                     : "暂无章节蓝图",
                 novel_number: chapterNum,
                 chapter_title: currentChapter.title || `第${chapterNum}章`
@@ -1173,10 +1176,10 @@ export default function App() {
 
             if (generatedData.blueprint) {
                 const blueprintLines = generatedData.blueprint.split('\n');
-                // 查找当前章节
-                const currentChapterRegex = new RegExp(`### 第${currentChapterNum}章 - (.*)`);
+                // 查找当前章节，支持更灵活的匹配格式
+                const currentChapterRegex = new RegExp(`###\\s*第\\s*${currentChapterNum}\\s*章\\s*[:：\\-－\\s]*(.*)`, 'i');
                 // 查找下一章
-                const nextChapterRegex = new RegExp(`### 第${currentChapterNum + 1}章 -`);
+                const nextChapterRegex = new RegExp(`###\\s*第\\s*${currentChapterNum + 1}\\s*章`, 'i');
 
                 let inCurrentChapter = false;
                 let inNextChapter = false;
@@ -1185,7 +1188,7 @@ export default function App() {
                     const currentMatch = line.match(currentChapterRegex);
                     if (currentMatch) {
                         inCurrentChapter = true;
-                        chapterTitle = currentMatch[1].trim();
+                        chapterTitle = currentMatch[1]?.trim() || "暂无标题";
                     } else if (nextChapterRegex.test(line)) {
                         inCurrentChapter = false;
                         inNextChapter = true;
@@ -1227,8 +1230,9 @@ export default function App() {
                 word_count: String(inputs.wordCount || 2000),
                 CHAPTER_BLUEPRINT: generatedData.blueprint || "暂无章节蓝图",
                 global_summary: latestArchive.globalSummary,
-                previous_chapter_excerpt: previousContent,
-                chapter_summary: latestArchive.chapterSummary || "暂无摘要",
+                // 优化前文截取：扩大截取窗口至1500字，为AI提供更充足的末尾细节
+                previous_chapter_excerpt: previousContent.length > 1500 ? `...${previousContent.slice(-1500)}` : previousContent,
+                previous_chapter_summary: latestArchive.chapterSummary || "暂无摘要",
                 next_chapter_number: currentChapterNum + 1,
                 next_chapter_title: `第${currentChapterNum + 1}章`,
                 next_chapter_purpose: nextChapterPurpose
@@ -1423,7 +1427,7 @@ export default function App() {
                                                 setIsGenerating(true);
                                                 try {
                                                     // 1. 使用更直接、更有网文感的系统提示
-                                                    const systemPrompt = "你是一个深耕网文市场多年的爆款主编，最擅长根据题材起出极具点击率的书名。请直接输出一个最合适的书名，禁止任何解释语。";
+                                                    const systemPrompt = PROMPTS.GEN_TITLE;
 
                                                     // 2. 优化用户指令，强调基于内容而非角色本身
                                                     const userPrompt = `
@@ -2003,12 +2007,20 @@ export default function App() {
                     <div className="flex items-center justify-between gap-2 mb-2">
                         <div className="flex items-center gap-2 flex-1 min-w-0">
                             <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${apiConfig.apiKey ? 'bg-black' : 'bg-gray-300'}`} />
-                            <span className="text-gray-500 font-medium truncate">
-                                {apiConfig.provider === 'google' ? 'Google Gemini' :
-                                    apiConfig.provider === 'deepseek' ? 'DeepSeek' :
-                                        apiConfig.provider === 'openai' ? 'OpenAI' :
-                                            apiConfig.provider === 'claude' ? 'Claude' :
-                                                apiConfig.provider === 'custom' ? 'Custom' : '未配置'}
+                            <span className="text-gray-500 font-medium truncate flex flex-col">
+                                <span>
+                                    {apiConfig.provider === 'google' ? 'Google Gemini' :
+                                        apiConfig.provider === 'deepseek' ? 'DeepSeek' :
+                                            apiConfig.provider === 'openai' ? 'OpenAI' :
+                                                apiConfig.provider === 'claude' ? 'Claude' :
+                                                    apiConfig.provider === 'qwen' ? '通义千问' :
+                                                        apiConfig.provider === 'custom' ? 'Custom' : '未配置'}
+                                </span>
+                                {apiConfig.textModel && (
+                                    <span className="text-[9px] text-gray-400 font-normal leading-tight opacity-70">
+                                        {apiConfig.textModel}
+                                    </span>
+                                )}
                             </span>
                         </div>
                         <div className="flex gap-1">
@@ -2030,8 +2042,9 @@ export default function App() {
                             </button>
                         </div>
                     </div>
-                    <div className="text-[10px] text-gray-400 text-center font-serif italic">
-                        Story Mind © 2025
+                    <div className="text-[10px] text-gray-400 text-center font-serif leading-relaxed">
+                        基于猫叔的AI小说创作系统制作<br />
+                        公众号：AI替代人类
                     </div>
                 </div>
             </div>

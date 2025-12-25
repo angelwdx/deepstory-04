@@ -545,7 +545,7 @@ export const ConfigModal: React.FC<{ isOpen: boolean; onClose: () => void; confi
     // 模型预设配置
     const MODEL_PRESETS = {
         google: {
-            baseUrl: 'https://gemini.txtbg.cn',
+            baseUrl: 'https://generativelanguage.googleapis.com',
             models: [
                 { value: 'gemini-3-pro-preview', label: 'Gemini 3.0 Pro (Preview)' },
                 { value: 'gemini-3-flash-preview', label: 'Gemini 3.0 Flash (Preview)' },
@@ -583,6 +583,16 @@ export const ConfigModal: React.FC<{ isOpen: boolean; onClose: () => void; confi
                 { value: 'custom', label: '自定义' }
             ]
         },
+        qwen: {
+            baseUrl: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
+            models: [
+                { value: 'qwen-max', label: 'Qwen Max' },
+                { value: 'qwen-plus', label: 'Qwen Plus' },
+                { value: 'qwen-turbo', label: 'Qwen Turbo' },
+                { value: 'qwen-long', label: 'Qwen Long' },
+                { value: 'custom', label: '自定义' }
+            ]
+        },
         custom: {
             baseUrl: '',
             models: [
@@ -594,7 +604,7 @@ export const ConfigModal: React.FC<{ isOpen: boolean; onClose: () => void; confi
     // 初始化配置
     const initialConfig = {
         provider: 'google' as const,
-        baseUrl: 'https://gemini.txtbg.cn',
+        baseUrl: 'https://generativelanguage.googleapis.com',
         apiKey: '',
         textModel: 'gemini-2.5-flash',
         customTextModel: ''
@@ -681,6 +691,7 @@ export const ConfigModal: React.FC<{ isOpen: boolean; onClose: () => void; confi
                             <option value="openai">OpenAI</option>
                             <option value="claude">Anthropic Claude</option>
                             <option value="deepseek">DeepSeek</option>
+                            <option value="qwen">通义千问 (Qwen)</option>
                             <option value="custom">自定义 (OpenAI兼容)</option>
                         </select>
                     </div>

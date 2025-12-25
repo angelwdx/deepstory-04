@@ -1,6 +1,6 @@
 
 export interface ApiConfig {
-  provider: 'google' | 'openai' | 'claude' | 'deepseek' | 'custom';
+  provider: 'google' | 'openai' | 'claude' | 'deepseek' | 'qwen' | 'custom';
   baseUrl: string;
   apiKey: string;
   textModel: string;

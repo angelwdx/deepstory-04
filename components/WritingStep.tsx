@@ -488,25 +488,13 @@ ${THEME_LIBRARY_CONTENT} `;
         setIsHumanizeRewriting(true);
         try {
             // 构建人性化改写提示词
-            const systemPrompt = "你是一位专业的中文编辑，擅长模仿给定范文的风格，将生硬的文本改写为更自然、流畅的中文文章。";
-            const userPrompt = `请根据以下要求改写提供的文本：
-
-### 要求：
-1. 保持原文的核心内容和意思不变
-2. 仔细分析并模仿范文的写作风格、语气、句式和用词特点
-3. 将原文改写成与范文风格一致的自然流畅的中文表达
-4. 保持适当的段落结构
-
-### 范文：
-${humanizePrompt || '无范文，仅需提升文字的自然度和流畅度'}
-
-### 原文：
-${currentChapter.content}
-
-### 改写后的文本：`;
+            const prompt = formatPrompt(PROMPTS.HUMANIZE_REWRITE, {
+                humanize_prompt: humanizePrompt || '',
+                original_content: currentChapter.content
+            });
 
             // 使用generateContent函数调用API，包含完整的错误处理和重试机制
-            const rawContent = await generateContent(systemPrompt, userPrompt, apiConfig);
+            const rawContent = await generateContent("", prompt, apiConfig);
             let newContent = cleanAIResponse(rawContent);
 
             const titleLineRegex = /^##\s*第.+?章.*$/m;
