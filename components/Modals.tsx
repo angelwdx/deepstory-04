@@ -587,9 +587,10 @@ export const ConfigModal: React.FC<{ isOpen: boolean; onClose: () => void; confi
         google: {
             baseUrl: 'https://generativelanguage.googleapis.com',
             models: [
+                { value: 'gemini-3-pro-preview', label: 'Google Gemini 3.0 Pro (Preview)' },
+                { value: 'gemini-3-flash-preview', label: 'Google Gemini 3.0 Flash (Preview)' },
                 { value: 'gemini-2.5-flash', label: 'Google Gemini 2.5 Flash' },
-                { value: 'gemini-3-pro-preview', label: 'Google Gemini 3.0 Pro' },
-                { value: 'gemini-2.5-flash-preview-09-2025', label: 'Google Gemini 2.5' },
+                { value: 'gemini-2.5-pro-preview', label: 'Google Gemini 2.5 Pro (Preview)' },
                 { value: 'custom', label: '自定义' }
             ]
         },

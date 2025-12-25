@@ -86,7 +86,7 @@ export default function App() {
 
     const [showCustomRequestModal, setShowCustomRequestModal] = useState(false);
     const [customModalTitle, setCustomModalTitle] = useState("");
-    
+
     // 控制移动端侧边栏显示/隐藏
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -155,7 +155,7 @@ export default function App() {
 
                 // 提示导入成功
                 showAlert('项目导入成功！', 'success');
-                
+
                 // 重置文件输入
                 if (fileInputRef.current) {
                     fileInputRef.current.value = '';
@@ -218,7 +218,7 @@ export default function App() {
             showAlert('项目重置失败，请重试！', 'error');
         }
     };
-    
+
     // 剧情结构选择相关状态
     const [showPlotStructureModal, setShowPlotStructureModal] = useState(false);
     const [selectedPlotStructure, setSelectedPlotStructure] = useState<string>(PLOT_STRUCTURES[0]?.name || "三幕式结构（Three-Act Structure）");
@@ -235,7 +235,7 @@ export default function App() {
                         provider: parsedConfig.provider || 'google',
                         ...parsedConfig
                     });
-                } catch (e) { 
+                } catch (e) {
                     console.error("Config load error", e);
                 }
             }
@@ -244,7 +244,7 @@ export default function App() {
             console.error("localStorage access error", e);
         }
     }, []);
-    
+
     // 保存配置时添加try-catch块，确保localStorage无法访问时应用仍能正常运行
     const handleConfigSave = (config: ApiConfig) => {
         setApiConfig(config);
@@ -265,13 +265,13 @@ export default function App() {
                 chapterSummary: "暂无章节摘要"
             };
         }
-        
+
         // 对于后续章节，查找最大的章节号 ≤ targetChapterNum - 1 的存档
         const sortedArchives = [...(generatedData.stateHistory || [])].sort((a, b) => b.chapterNum - a.chapterNum);
-        
+
         // 查找第一个章节号小于 targetChapterNum 的存档
         const latestArchive = sortedArchives.find(archive => archive.chapterNum < targetChapterNum);
-        
+
         // 如果找到存档，使用存档中的状态；否则使用当前全局状态
         if (latestArchive) {
             return {
@@ -280,7 +280,7 @@ export default function App() {
                 chapterSummary: latestArchive.chapterSummary
             };
         }
-        
+
         // 没有找到存档，使用当前全局状态
         return {
             characterState: generatedData.state || "暂无角色状态",
@@ -300,30 +300,30 @@ export default function App() {
                 stepCustomInstructions,
                 exportDate: new Date().toISOString()
             };
-            
+
             // 转换为JSON字符串，格式化输出
             const jsonString = JSON.stringify(projectData, null, 2);
-            
+
             // 创建Blob对象
             const blob = new Blob([jsonString], { type: "application/json" });
-            
+
             // 生成下载链接
             const url = URL.createObjectURL(blob);
-            
+
             // 创建下载链接元素
             const a = document.createElement("a");
             a.href = url;
             // 使用小说名称或默认名称作为文件名
             a.download = `${inputs.novelTitle || "deepstory-project"}.json`;
-            
+
             // 触发下载
             document.body.appendChild(a);
             a.click();
-            
+
             // 清理
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            
+
             // 提示导出成功
             showAlert("项目导出成功！", "success");
         } catch (error) {
@@ -338,7 +338,7 @@ export default function App() {
 
     const cleanCodeBlock = (text: string) => {
         if (!text || typeof text !== 'string') return "";
-        
+
         let clean = text
             // 移除开头的代码块标记（支持带语言和不带语言的格式）
             .replace(/^```[a-z]*\s*/i, '')
@@ -350,69 +350,69 @@ export default function App() {
             .replace(/\n\s*\n/g, '\n\n')
             // 移除首尾空白
             .trim();
-        
+
         return clean;
     };
 
     // 解析AI生成的基础设定和核心DNA
     const parseGeneratedResult = (result: string) => {
         const cleanedResult = cleanCodeBlock(result);
-        
+
         // 提取基础设定部分 - 精确匹配，只到下一个标题前或结束
         const basicSettingsRegex = /(?:^|\n)(?:##\s*)?基础设定\s*\(BASIC_SETTINGS\)[\s\S]*?(?=(?:\n|^)(?:##\s*)?(?!基础设定|核心DNA))/i;
         const basicSettingsMatch = cleanedResult.match(basicSettingsRegex);
         const basicSettingsText = basicSettingsMatch ? basicSettingsMatch[0] : "";
-        
+
         // 提取核心DNA部分 - 精确匹配，只到下一个标题前或结束
         const coreDNARegex = /(?:^|\n)(?:##\s*)?核心DNA\s*\(STORY_DNA\)[\s\S]*?(?=(?:\n|^)(?:##\s*)?(?!基础设定|核心DNA))/i;
         const coreDNAMatch = cleanedResult.match(coreDNARegex);
         const coreDNAText = coreDNAMatch ? coreDNAMatch[0] : "";
-        
+
         // 解析基础设定键值对
         const settings: Partial<UserInputs> = {};
-        
+
         // 小说名称
         const novelTitleMatch = basicSettingsText.match(/小说名称：([^\n]+)/);
         if (novelTitleMatch) {
             settings.novelTitle = novelTitleMatch[1].trim();
         }
-        
+
         // 故事基调
         const toneMatch = basicSettingsText.match(/故事基调：([^\n]+)/);
         if (toneMatch) {
             settings.tone = toneMatch[1].trim();
         }
-        
+
         // 结局倾向
         const endingMatch = basicSettingsText.match(/结局倾向：([^\n]+)/);
         if (endingMatch) {
             settings.ending = endingMatch[1].trim();
         }
-        
+
         // 叙事视角
         const perspectiveMatch = basicSettingsText.match(/叙事视角：([^\n]+)/);
         if (perspectiveMatch) {
             settings.perspective = perspectiveMatch[1].trim();
         }
-        
+
         // 预计章节数
         const chaptersMatch = basicSettingsText.match(/预计章节数：(\d+)章/);
         if (chaptersMatch) {
             settings.numberOfChapters = parseInt(chaptersMatch[1], 10);
         }
-        
+
         // 每章字数
         const wordCountMatch = basicSettingsText.match(/每章字数：(\d+)字/);
         if (wordCountMatch) {
             settings.wordCount = parseInt(wordCountMatch[1], 10);
         }
-        
+
         // 自定义特殊要求
         const customReqMatch = basicSettingsText.match(/自定义特殊要求：([^\n]+)/);
         if (customReqMatch) {
             settings.customRequirements = customReqMatch[1].trim();
         }
-        
+
         return { basicSettings: settings, coreDNA: coreDNAText };
     };
 
@@ -433,7 +433,7 @@ export default function App() {
             userPrompt += `预计章节数：${inputs.numberOfChapters || 10}章\n`;
             userPrompt += `每章字数：${inputs.wordCount || 2000}字\n`;
             userPrompt += `自定义特殊要求：${inputs.customRequirements || "无"}\n`;
-            
+
             if (generatedData.dna) {
                 userPrompt += `\n当前核心DNA：\n${generatedData.dna}`;
             }
@@ -457,23 +457,23 @@ export default function App() {
             // 从完整评审结果中提取用户选择的具体方案
             const extractSelectedProposal = (result: string, index: number) => {
                 // 方案匹配正则，提取指定索引的方案
-                const targetIndex = index + 1; // 转为1-based索引
-                
+                const targetIndex = index; // 已经是1-based索引，无需转换
+
                 // 提取完整的方案内容（包括方案内的所有方向）
                 const proposalRegex = new RegExp(`【方案${targetIndex}：.*?】[\s\S]*?(?=【方案${targetIndex + 1}：|$)`, 'i');
                 const proposalMatch = result.match(proposalRegex);
-                
+
                 // 如果找到匹配的方案，返回该方案的完整内容
                 // 注意：每个方案内部的方向编号都是从1开始的，不是从方案索引开始的
                 return proposalMatch ? proposalMatch[0] : result;
             };
-            
+
             // 提取用户选择的具体方案
             const selectedProposal = extractSelectedProposal(judgeResult, proposalIndex);
-            
+
             // 使用PROMPTS.DNA模板生成DNA
             const template = customPrompts['DNA'] || PROMPTS.DNA;
-            
+
             // 构建完整变量，包含所有基础设定
             const variables = {
                 novel_title: String(inputs.novelTitle || "未命名"),
@@ -488,13 +488,13 @@ export default function App() {
                 custom_instruction: `严格根据判官评审方案${proposalIndex}重写核心DNA，只生成该方案的内容，不要生成其他方案或方向：${selectedProposal}`,
                 user_guidance: String(inputs.customRequirements || "无")
             };
-            
+
             // 使用formatPrompt函数处理所有变量替换
             const prompt = formatPrompt(template, variables);
-            
+
             // 生成新的DNA
             const newContent = await generateContent(prompt, "开始生成任务", apiConfig);
-            
+
             // 清理生成结果，只保留基础设定和核心DNA部分
             const cleanGeneratedResult = (result: string) => {
                 // 1. 先清理代码块格式和多余内容
@@ -509,20 +509,20 @@ export default function App() {
                     // 移除所有非基础设定和非核心DNA的标题
                     .replace(/(?:^|\n)##\s*(?!基础设定|核心DNA)[^\n]*/gi, '')
                     .trim();
-                
+
                 // 2. 提取基础设定部分 - 改进正则，只匹配真正的基础设定内容
                 // 基础设定应该是标题+列表项的形式，所以匹配到基础设定标题开始，直到遇到第一个非列表项且不是空行的内容
                 const basicSettingsRegex = /(?:^|\n)(##\s*)?基础设定\s*\(BASIC_SETTINGS\)(?:\n|$)([\s\S]*?)(?=(?:^|\n)(?!(?:\s*\*|\s*-|\s*\n|$))|$)/i;
                 const basicSettingsMatch = cleaned.match(basicSettingsRegex);
                 let basicSettings = basicSettingsMatch ? `${basicSettingsMatch[1] || '## '}基础设定 (BASIC_SETTINGS)\n${basicSettingsMatch[2]}`.trim() : '';
-                
+
                 // 3. 提取核心DNA部分
                 let coreDNA = '';
-                
+
                 // 先尝试匹配包含核心DNA标题的内容
                 const coreDNARegex = /(?:^|\n)(##\s*)?核心DNA\s*\(STORY_DNA\)[\s\S]*/i;
                 const coreDNAMatch = cleaned.match(coreDNARegex);
-                
+
                 if (coreDNAMatch) {
                     // 如果匹配到，直接使用
                     coreDNA = coreDNAMatch[0].trim();
@@ -532,7 +532,7 @@ export default function App() {
                         // 提取基础设定结束后的内容作为核心DNA
                         const basicSettingsEnd = cleaned.indexOf(basicSettings) + basicSettings.length;
                         const remainingContent = cleaned.slice(basicSettingsEnd).trim();
-                        
+
                         if (remainingContent) {
                             // 如果有剩余内容，将其作为核心DNA，并添加标题
                             coreDNA = `## 核心DNA (STORY_DNA)\n${remainingContent}`;
@@ -544,7 +544,7 @@ export default function App() {
                         }
                     }
                 }
-                
+
                 // 4. 特殊处理：如果基础设定包含了核心DNA内容（因为正则匹配问题），手动分离
                 if (basicSettings && !coreDNA) {
                     // 检查基础设定中是否包含核心DNA的内容结构
@@ -552,7 +552,7 @@ export default function App() {
                     let basicSettingsLines: string[] = [];
                     let coreDNALines: string[] = [];
                     let isInCoreDNA = false;
-                    
+
                     for (const line of lines) {
                         if (basicSettingsLines.length > 0 && !line.trim().startsWith('*') && !line.trim().startsWith('-') && line.trim()) {
                             // 遇到非列表项且非空行，开始核心DNA部分
@@ -564,16 +564,16 @@ export default function App() {
                             basicSettingsLines.push(line);
                         }
                     }
-                    
+
                     // 更新基础设定和核心DNA
                     basicSettings = basicSettingsLines.join('\n').trim();
                     const coreDNAContent = coreDNALines.join('\n').trim();
-                    
+
                     if (coreDNAContent) {
                         coreDNA = `## 核心DNA (STORY_DNA)\n${coreDNAContent}`;
                     }
                 }
-                
+
                 // 5. 组合两部分内容
                 let finalContent = '';
                 if (basicSettings && coreDNA) {
@@ -586,7 +586,7 @@ export default function App() {
                     // 如果都没有，确保至少返回一个有标题的内容
                     finalContent = `## 核心DNA (STORY_DNA)\n${cleaned}`;
                 }
-                
+
                 // 6. 确保正确的Markdown格式
                 finalContent = finalContent
                     // 确保基础设定有##前缀
@@ -596,16 +596,16 @@ export default function App() {
                     // 清理多余空行
                     .replace(/\n\s*\n/g, '\n\n')
                     .trim();
-                
+
                 return finalContent;
             };
-            
+
             // 清理生成结果，去掉前面的说明文字并修复格式
             const cleanedContent = cleanGeneratedResult(newContent);
-            
+
             // 将清理后的生成结果（只包含核心DNA）保存到generatedData.dna
             setGeneratedData(prev => ({ ...prev, dna: cleanedContent }));
-            
+
             showAlert(`已采纳方案${proposalIndex}并重写核心DNA`, "success");
         } catch (error: any) {
             console.error('重写失败:', error);
@@ -621,7 +621,7 @@ export default function App() {
             setShowConfigModal(true);
             return;
         }
-        
+
         // 对于custom模型，确保customTextModel已设置
         if (apiConfig.textModel === 'custom' && !apiConfig.customTextModel) {
             setShowConfigModal(true);
@@ -679,20 +679,20 @@ export default function App() {
                     // 移除所有非基础设定和非核心DNA的标题
                     .replace(/(?:^|\n)##\s*(?!基础设定|核心DNA)[^\n]*/gi, '')
                     .trim();
-                
+
                 // 2. 提取基础设定部分 - 改进正则，只匹配真正的基础设定内容
                 // 基础设定应该是标题+列表项的形式，所以匹配到基础设定标题开始，直到遇到第一个非列表项且不是空行的内容
                 const basicSettingsRegex = /(?:^|\n)(##\s*)?基础设定\s*\(BASIC_SETTINGS\)(?:\n|$)([\s\S]*?)(?=(?:^|\n)(?!(?:\s*\*|\s*-|\s*\n|$))|$)/i;
                 const basicSettingsMatch = cleaned.match(basicSettingsRegex);
                 let basicSettings = basicSettingsMatch ? `${basicSettingsMatch[1] || '## '}基础设定 (BASIC_SETTINGS)\n${basicSettingsMatch[2]}`.trim() : '';
-                
+
                 // 3. 提取核心DNA部分
                 let coreDNA = '';
-                
+
                 // 先尝试匹配包含核心DNA标题的内容
                 const coreDNARegex = /(?:^|\n)(##\s*)?核心DNA\s*\(STORY_DNA\)[\s\S]*/i;
                 const coreDNAMatch = cleaned.match(coreDNARegex);
-                
+
                 if (coreDNAMatch) {
                     // 如果匹配到，直接使用
                     coreDNA = coreDNAMatch[0].trim();
@@ -702,7 +702,7 @@ export default function App() {
                         // 提取基础设定结束后的内容作为核心DNA
                         const basicSettingsEnd = cleaned.indexOf(basicSettings) + basicSettings.length;
                         const remainingContent = cleaned.slice(basicSettingsEnd).trim();
-                        
+
                         if (remainingContent) {
                             // 如果有剩余内容，将其作为核心DNA，并添加标题
                             coreDNA = `## 核心DNA (STORY_DNA)\n${remainingContent}`;
@@ -714,7 +714,7 @@ export default function App() {
                         }
                     }
                 }
-                
+
                 // 4. 特殊处理：如果基础设定包含了核心DNA内容（因为正则匹配问题），手动分离
                 if (basicSettings && !coreDNA) {
                     // 检查基础设定中是否包含核心DNA的内容结构
@@ -722,7 +722,7 @@ export default function App() {
                     let basicSettingsLines: string[] = [];
                     let coreDNALines: string[] = [];
                     let isInCoreDNA = false;
-                    
+
                     for (const line of lines) {
                         if (basicSettingsLines.length > 0 && !line.trim().startsWith('*') && !line.trim().startsWith('-') && line.trim()) {
                             // 遇到非列表项且非空行，开始核心DNA部分
@@ -734,16 +734,16 @@ export default function App() {
                             basicSettingsLines.push(line);
                         }
                     }
-                    
+
                     // 更新基础设定和核心DNA
                     basicSettings = basicSettingsLines.join('\n').trim();
                     const coreDNAContent = coreDNALines.join('\n').trim();
-                    
+
                     if (coreDNAContent) {
                         coreDNA = `## 核心DNA (STORY_DNA)\n${coreDNAContent}`;
                     }
                 }
-                
+
                 // 5. 组合两部分内容
                 let finalContent = '';
                 if (basicSettings && coreDNA) {
@@ -756,7 +756,7 @@ export default function App() {
                     // 如果都没有，确保至少返回一个有标题的内容
                     finalContent = `## 核心DNA (STORY_DNA)\n${cleaned}`;
                 }
-                
+
                 // 6. 确保正确的Markdown格式
                 finalContent = finalContent
                     // 确保基础设定有##前缀
@@ -766,7 +766,7 @@ export default function App() {
                     // 清理多余空行
                     .replace(/\n\s*\n/g, '\n\n')
                     .trim();
-                
+
                 return finalContent;
             };
 
@@ -795,11 +795,11 @@ export default function App() {
             });
         } catch (error: any) {
             console.error("Generation failed:", error);
-            
+
             // 增强错误信息，特别是针对角色动力学步骤
             let errorMessage = error.message;
             let additionalTips = "";
-            
+
             if (stepId === 'characters') {
                 if (errorMessage.includes('超时')) {
                     additionalTips = "\n建议：1. 尝试使用更快的模型（如Gemini 2.5 Flash）；2. 检查网络连接；3. 减少自定义要求的复杂度；4. 尝试减少生成的角色数量。";
@@ -808,7 +808,7 @@ export default function App() {
             } else {
                 errorMessage = `生成失败: ${error.message}`;
             }
-            
+
             showAlert(errorMessage, "error");
         } finally {
             setIsGenerating(false);
@@ -821,7 +821,7 @@ export default function App() {
             setShowConfigModal(true);
             return;
         }
-        
+
         // 对于custom模型，确保customTextModel已设置
         if (apiConfig.textModel === 'custom' && !apiConfig.customTextModel) {
             setShowConfigModal(true);
@@ -843,12 +843,12 @@ export default function App() {
 
             // 从章节蓝图中获取下章信息
             let nextChapterPurpose = "承接剧情";
-            
+
             // 解析章节蓝图获取下章信息
             if (generatedData.blueprint) {
                 const blueprintLines = generatedData.blueprint.split('\n');
                 const nextChapterRegex = new RegExp(`### 第${chapterNum + 1}章 -`);
-                
+
                 let inNextChapter = false;
                 for (const line of blueprintLines) {
                     if (nextChapterRegex.test(line)) {
@@ -865,7 +865,7 @@ export default function App() {
 
             // 查找最合适的状态存档
             const latestArchive = findLatestStateArchive(chapterNum);
-            
+
             const variables = {
                 novel_number: chapterNum,
                 chapter_title: params.title || `第${chapterNum}章`,
@@ -957,17 +957,17 @@ export default function App() {
             // 优化上下文内容，只传递关键信息，提高AI生成的准确性
             // 对于长章节，只传递最近的部分内容，避免上下文过多
             const maxChapterLength = 1000; // 最大章节内容长度
-            const chapterText = currentChapter.content.length > maxChapterLength 
-                ? `...${currentChapter.content.slice(-maxChapterLength)}` 
+            const chapterText = currentChapter.content.length > maxChapterLength
+                ? `...${currentChapter.content.slice(-maxChapterLength)}`
                 : currentChapter.content;
-            
+
             const variables = {
                 chapter_text: chapterText,
                 global_summary: generatedData.globalSummary || generatedData.dna || "暂无全局摘要",
                 character_state: generatedData.state || "暂无角色状态",
                 // 只传递当前章节相关的蓝图内容，避免上下文过多
-                chapter_blueprint: generatedData.blueprint 
-                    ? generatedData.blueprint.split('###').find(section => section.includes(`第${chapterNum}章`)) || "暂无当前章节蓝图" 
+                chapter_blueprint: generatedData.blueprint
+                    ? generatedData.blueprint.split('###').find(section => section.includes(`第${chapterNum}章`)) || "暂无当前章节蓝图"
                     : "暂无章节蓝图",
                 novel_number: chapterNum,
                 chapter_title: currentChapter.title || `第${chapterNum}章`
@@ -975,7 +975,7 @@ export default function App() {
 
             const prompt = formatPrompt(template, variables);
             const result = await generateContent(prompt, "同步上下文任务", apiConfig);
-            
+
             // 添加调试日志
             console.log('[Sync Context] AI生成结果:', result);
 
@@ -983,33 +983,33 @@ export default function App() {
             const globalSummaryMatch = result.match(/##\s*(?:全局故事摘要|GLOBAL_SUMMARY_UPDATED)[\s\S]*?(?=##\s*(?:角色状态档案|CHARACTER_STATE_UPDATED|当前章节摘要|CURRENT_CHAPTER_SUMMARY)|$)/i);
             const charStateMatch = result.match(/##\s*(?:角色状态档案|CHARACTER_STATE_UPDATED)[\s\S]*?(?=##\s*(?:当前章节摘要|CURRENT_CHAPTER_SUMMARY|$))/i);
             const chapSummaryMatch = result.match(/##\s*(?:当前章节摘要|CURRENT_CHAPTER_SUMMARY)[\s\S]*$/i);
-            
+
             // 提取匹配内容，处理不同格式
             const extractContent = (match: RegExpMatchArray | null) => {
                 if (!match) return null;
                 // 移除标题行，只保留内容
                 return match[0].replace(/^##\s*(?:.*?)\n/i, '').trim();
             };
-            
+
             const globalSummaryContent = extractContent(globalSummaryMatch);
             const charStateContent = extractContent(charStateMatch);
             const chapSummaryContent = extractContent(chapSummaryMatch);
-            
+
             // 增强容错处理，确保至少有一部分内容生成
             if (globalSummaryContent || charStateContent || chapSummaryContent) {
                 setGeneratedData(prev => {
                     const newData = { ...prev };
-                    
+
                     // 更新全局摘要
                     if (globalSummaryContent) {
                         newData.globalSummary = globalSummaryContent;
                     }
-                    
+
                     // 更新角色状态
                     if (charStateContent) {
                         newData.state = charStateContent;
                     }
-                    
+
                     // 更新章节摘要
                     if (chapSummaryContent) {
                         const newChapters = [...prev.chapters];
@@ -1040,7 +1040,7 @@ export default function App() {
 
                     return newData;
                 });
-                
+
                 // 提示用户同步成功，并告知生成了哪些内容
                 let successMessage = "上下文同步成功！\n已归档至角色状态库。\n\n生成内容：";
                 if (globalSummaryContent) successMessage += "\n- 全局故事摘要";
@@ -1076,26 +1076,26 @@ export default function App() {
         let variables: any = {};
 
         // 根据不同的promptKey设置不同的变量
-            if (promptKey === 'CHAPTER_1' || promptKey === 'CHAPTER_NEXT') {
-                // 章节生成相关提示词
-                // 使用传入的chapterNum或默认当前查看的章节
-                let currentChapterNum = chapterNum || writingStepState.viewChapter || 1;
-                
-                // 根据promptKey强制设置正确的章节号
-                if (promptKey === 'CHAPTER_1') {
-                    // 首章创作强制使用第1章
-                    currentChapterNum = 1;
-                } else if (promptKey === 'CHAPTER_NEXT') {
-                    // 后续章节确保章节号大于等于2
-                    currentChapterNum = Math.max(currentChapterNum, 2);
-                }
-                
-                const isFirstChapter = currentChapterNum === 1;
-                let previousContent = "";
-                if (!isFirstChapter) {
-                    const prevChap = generatedData.chapters[currentChapterNum - 2];
-                    previousContent = prevChap ? prevChap.content.slice(-800) : "无前文";
-                }
+        if (promptKey === 'CHAPTER_1' || promptKey === 'CHAPTER_NEXT') {
+            // 章节生成相关提示词
+            // 使用传入的chapterNum或默认当前查看的章节
+            let currentChapterNum = chapterNum || writingStepState.viewChapter || 1;
+
+            // 根据promptKey强制设置正确的章节号
+            if (promptKey === 'CHAPTER_1') {
+                // 首章创作强制使用第1章
+                currentChapterNum = 1;
+            } else if (promptKey === 'CHAPTER_NEXT') {
+                // 后续章节确保章节号大于等于2
+                currentChapterNum = Math.max(currentChapterNum, 2);
+            }
+
+            const isFirstChapter = currentChapterNum === 1;
+            let previousContent = "";
+            if (!isFirstChapter) {
+                const prevChap = generatedData.chapters[currentChapterNum - 2];
+                previousContent = prevChap ? prevChap.content.slice(-800) : "无前文";
+            }
 
             // 从章节蓝图中获取当前章节的详细信息
             let chapterRole = "推进剧情";
@@ -1106,13 +1106,13 @@ export default function App() {
             let chapterTitle = "暂无标题";
             let shortSummary = "暂无摘要";
             let nextChapterPurpose = "承接剧情";
-            
+
             // 解析章节蓝图获取当前章节和下章信息
             if (generatedData.blueprint) {
                 const blueprintLines = generatedData.blueprint.split('\n');
                 const currentChapterRegex = new RegExp(`### 第${currentChapterNum}章 -`);
                 const nextChapterRegex = new RegExp(`### 第${currentChapterNum + 1}章 -`);
-                
+
                 let inCurrentChapter = false;
                 let inNextChapter = false;
                 for (const line of blueprintLines) {
@@ -1159,7 +1159,7 @@ export default function App() {
 
             // 查找最合适的状态存档
             const latestArchive = findLatestStateArchive(currentChapterNum);
-            
+
             variables = {
                 novel_number: currentChapterNum,
                 chapter_title: generatedData.chapters[currentChapterNum - 1]?.title || `第${currentChapterNum}章`,
@@ -1392,31 +1392,31 @@ export default function App() {
                                                 <button
                                                     type="button"
                                                     onClick={async () => {
-                                                    // 检查API配置
-                                                    if (!apiConfig.apiKey) {
-                                                        setShowConfigModal(true);
-                                                        return;
-                                                    }
-                                                    
-                                                    if (!inputs.topic || !inputs.genre) {
-                                                        showAlert('请先填写核心脑洞和题材分类', "warning");
-                                                        return;
-                                                    }
-                                                    setIsGenerating(true);
-                                                    try {
-                                                        const systemPrompt = "你是一个专业的小说命名专家，擅长根据小说创意生成吸引人的书名。";
-                                                        const userPrompt = `根据以下信息生成一个吸引人的小说名称（只返回书名，不要其他内容）：\n核心创意：${inputs.topic}\n题材：${inputs.genre}\n基调：${inputs.tone || '未指定'}\n\n要求：\n1. 书名要简洁有力，3-8个字\n2. 要体现核心创意和题材特点\n3. 要有吸引力和记忆点\n4. 只返回书名本身，不要引号或其他说明`;
+                                                        // 检查API配置
+                                                        if (!apiConfig.apiKey) {
+                                                            setShowConfigModal(true);
+                                                            return;
+                                                        }
 
-                                                        const result = await generateContent(systemPrompt, userPrompt, apiConfig);
-                                                        const title = result.trim().replace(/["""]/g, '');
-                                                        setInputs(prev => ({ ...prev, novelTitle: title }));
-                                                    } catch (error) {
-                                                        console.error('生成书名失败:', error);
-                                                        showAlert('生成失败，请检查API配置', "error");
-                                                    } finally {
-                                                        setIsGenerating(false);
-                                                    }
-                                                }}
+                                                        if (!inputs.topic || !inputs.genre) {
+                                                            showAlert('请先填写核心脑洞和题材分类', "warning");
+                                                            return;
+                                                        }
+                                                        setIsGenerating(true);
+                                                        try {
+                                                            const systemPrompt = "你是一个专业的小说命名专家，擅长根据小说创意生成吸引人的书名。";
+                                                            const userPrompt = `根据以下信息生成一个吸引人的小说名称（只返回书名，不要其他内容）：\n核心创意：${inputs.topic}\n题材：${inputs.genre}\n基调：${inputs.tone || '未指定'}\n\n要求：\n1. 书名要简洁有力，3-8个字\n2. 要体现核心创意和题材特点\n3. 要有吸引力和记忆点\n4. 只返回书名本身，不要引号或其他说明`;
+
+                                                            const result = await generateContent(systemPrompt, userPrompt, apiConfig);
+                                                            const title = result.trim().replace(/["""]/g, '');
+                                                            setInputs(prev => ({ ...prev, novelTitle: title }));
+                                                        } catch (error) {
+                                                            console.error('生成书名失败:', error);
+                                                            showAlert('生成失败，请检查API配置', "error");
+                                                        } finally {
+                                                            setIsGenerating(false);
+                                                        }
+                                                    }}
                                                     disabled={isGenerating || !inputs.topic || !inputs.genre}
                                                     className="px-4 py-3 bg-orange-600 hover:bg-orange-500 text-white rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap flex items-center justify-center gap-2"
                                                 >
@@ -1437,12 +1437,12 @@ export default function App() {
                                                     className="w-full bg-stone-950 border border-stone-800 rounded-lg p-3 text-white focus:ring-2 focus:ring-orange-500 outline-none transition-all hover:border-orange-700"
                                                     value={inputs.numberOfChapters || ''}
                                                     onChange={(e) => {
-                                                    const value = e.target.value;
-                                                    setInputs(prev => ({
-                                                        ...prev,
-                                                        numberOfChapters: value ? parseInt(value) : 0
-                                                    }));
-                                                }}
+                                                        const value = e.target.value;
+                                                        setInputs(prev => ({
+                                                            ...prev,
+                                                            numberOfChapters: value ? parseInt(value) : 0
+                                                        }));
+                                                    }}
                                                     placeholder="12"
                                                 />
                                             </div>
@@ -1457,12 +1457,12 @@ export default function App() {
                                                     className="w-full bg-stone-950 border border-stone-800 rounded-lg p-3 text-white focus:ring-2 focus:ring-orange-500 outline-none transition-all hover:border-orange-700"
                                                     value={inputs.wordCount || ''}
                                                     onChange={(e) => {
-                                                    const value = e.target.value;
-                                                    setInputs(prev => ({
-                                                        ...prev,
-                                                        wordCount: value ? parseInt(value) : 0
-                                                    }));
-                                                }}
+                                                        const value = e.target.value;
+                                                        setInputs(prev => ({
+                                                            ...prev,
+                                                            wordCount: value ? parseInt(value) : 0
+                                                        }));
+                                                    }}
                                                     placeholder="2000"
                                                 />
                                             </div>
@@ -1521,8 +1521,8 @@ export default function App() {
                     apiConfig={apiConfig}
                     onEditPrompt={!__HIDE_PROMPT_MANAGEMENT__ ? handleShowPrompt : undefined}
                     onSyncContext={handleSyncContext}
-                    onUpdateViewChapter={(chapterNum) => setWritingStepState(prev => ({...prev, viewChapter: chapterNum}))}
-                    onUpdateSelectedTheme={(theme) => setWritingStepState(prev => ({...prev, selectedTheme: theme}))}
+                    onUpdateViewChapter={(chapterNum) => setWritingStepState(prev => ({ ...prev, viewChapter: chapterNum }))}
+                    onUpdateSelectedTheme={(theme) => setWritingStepState(prev => ({ ...prev, selectedTheme: theme }))}
                     viewChapter={writingStepState.viewChapter}
                     selectedTheme={writingStepState.selectedTheme}
                 />
@@ -1538,7 +1538,7 @@ export default function App() {
                     {/* Action Bar */}
                     <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 bg-stone-900 p-4 rounded-xl border border-stone-800">
                         <h2 className="text-lg sm:text-xl font-bold text-white flex items-center">
-                            {React.createElement(STEPS[currentStep].icon, { className: "mr-2 text-orange-400", size: 22 })} 
+                            {React.createElement(STEPS[currentStep].icon, { className: "mr-2 text-orange-400", size: 22 })}
                             {STEPS[currentStep].title}
                         </h2>
                         <div className="flex space-x-2 sm:space-x-3 flex-wrap justify-end w-full sm:w-auto">
@@ -1563,7 +1563,7 @@ export default function App() {
                                     </button>
                                 </>
                             )}
-                            
+
                             {content && (
                                 <button
                                     onClick={() => openCustomModal(STEPS[currentStep].title, (val) => handleGenerateStep(currentStepId, val))}
@@ -1662,14 +1662,14 @@ export default function App() {
                                 <Activity className="mr-2 text-orange-400" size={20} sm:size={24} />
                                 角色状态库 (State Archives)
                             </h2>
-                            
+
                             {/* 中间提示信息 - 在移动端隐藏 */}
                             <div className="hidden sm:flex flex-1 justify-center mx-4">
                                 <div className="flex items-center text-sm text-amber-300 bg-amber-900/30 px-3 py-1 rounded-full border border-amber-800">
                                     💡 提示：完成章节创作后，点击右上角 <Activity size={16} className="inline-block align-middle" /> 图标更新角色状态
                                 </div>
                             </div>
-                            
+
                             <div className="flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto justify-end">
                                 {history.length > 0 && (
                                     <div className="relative flex-shrink-0">
@@ -1770,23 +1770,23 @@ export default function App() {
                 <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 bg-stone-900 p-4 rounded-xl border border-stone-800">
                     {/* 左侧：标题 */}
                     <h2 className="text-lg sm:text-xl font-bold text-white flex items-center">
-                        {React.createElement(STEPS[currentStep].icon, { className: "mr-2 text-orange-400", size: 22 })} 
+                        {React.createElement(STEPS[currentStep].icon, { className: "mr-2 text-orange-400", size: 22 })}
                         {STEPS[currentStep].title}
                     </h2>
-                    
+
                     {/* 中间：选择剧情结构按钮 */}
                     <div className="flex justify-center flex-1">
                         {currentStepId === 'plot' && (
                             <button
-                                    onClick={() => setShowPlotStructureModal(true)}
-                                    className="flex items-center px-4 py-2 bg-stone-800 hover:bg-stone-700 border border-stone-700 text-white rounded-lg transition-all hover:shadow-lg"
-                                >
-                                    <LayoutList size={18} className="mr-2 text-orange-400" />
-                                    结构: {selectedPlotStructure}
-                                </button>
+                                onClick={() => setShowPlotStructureModal(true)}
+                                className="flex items-center px-4 py-2 bg-stone-800 hover:bg-stone-700 border border-stone-700 text-white rounded-lg transition-all hover:shadow-lg"
+                            >
+                                <LayoutList size={18} className="mr-2 text-orange-400" />
+                                结构: {selectedPlotStructure}
+                            </button>
                         )}
                     </div>
-                    
+
                     {/* 右侧：其他按钮组 */}
                     <div className="flex space-x-2 sm:space-x-3 flex-wrap justify-end w-full sm:w-auto">
                         {currentStepId === 'dna' && (
@@ -1810,7 +1810,7 @@ export default function App() {
                                 </button>
                             </>
                         )}
-                        
+
                         {content && (
                             <button
                                 onClick={() => openCustomModal(STEPS[currentStep].title, (val) => handleGenerateStep(currentStepId, val))}
@@ -1896,7 +1896,7 @@ export default function App() {
                             // 根据新的提示词类型更新当前查看的章节
                             if (key === 'CHAPTER_1') {
                                 // 首章创作强制使用第1章
-                                setWritingStepState(prev => ({...prev, viewChapter: 1}));
+                                setWritingStepState(prev => ({ ...prev, viewChapter: 1 }));
                             } else if (key === 'CHAPTER_NEXT') {
                                 // 后续章节确保章节号大于等于2
                                 setWritingStepState(prev => ({
@@ -1907,7 +1907,7 @@ export default function App() {
                         }}
                         currentChapter={writingStepState.viewChapter}
                         totalChapters={inputs.numberOfChapters}
-                        onChapterChange={(chapterNum) => setWritingStepState(prev => ({...prev, viewChapter: chapterNum}))}
+                        onChapterChange={(chapterNum) => setWritingStepState(prev => ({ ...prev, viewChapter: chapterNum }))}
                     />
 
                     <PromptManagerModal
@@ -1951,7 +1951,7 @@ export default function App() {
                 content={judgeResult}
                 onSelectProposal={handleSelectJudgeProposal}
             />
-            
+
             <PlotStructureModal
                 isOpen={showPlotStructureModal}
                 onClose={() => setShowPlotStructureModal(false)}
@@ -1962,7 +1962,7 @@ export default function App() {
 
             {/* Mobile Sidebar Overlay */}
             {isSidebarOpen && (
-                <div 
+                <div
                     className="fixed inset-0 bg-black/50 z-10 md:hidden"
                     onClick={() => setIsSidebarOpen(false)}
                 />
@@ -2002,14 +2002,14 @@ export default function App() {
                                 onClick={handleImport}
                                 className="flex-1 bg-stone-800 hover:bg-stone-700 rounded-lg py-2 px-3 flex items-center justify-center gap-2 text-sm font-medium transition-colors border border-stone-700"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
                                 导入
                             </button>
                             <button
                                 onClick={handleExport}
                                 className="flex-1 bg-stone-800 hover:bg-stone-700 rounded-lg py-2 px-3 flex items-center justify-center gap-2 text-sm font-medium transition-colors border border-stone-700"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
                                 导出
                             </button>
                         </div>
@@ -2017,7 +2017,7 @@ export default function App() {
                             onClick={handleReset}
                             className="w-full bg-stone-800 hover:bg-stone-700 rounded-lg py-2 px-3 flex items-center justify-center gap-2 text-sm font-medium transition-colors border border-stone-700"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-400"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-400"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /></svg>
                             清空/重置
                         </button>
                     </div>
@@ -2049,8 +2049,8 @@ export default function App() {
                         <div className="flex items-center justify-between gap-2">
                             <div className="text-stone-500 text-[10px] ml-4 truncate flex-1 min-w-0" title={apiConfig.textModel}>
                                 {/* 对于自定义模型，显示用户输入的模型名称；其他模型显示textModel */}
-                                {(apiConfig.provider === 'custom' || apiConfig.textModel === 'custom') ? 
-                                    (apiConfig.customTextModel || apiConfig.textModel || '未选择模型') : 
+                                {(apiConfig.provider === 'custom' || apiConfig.textModel === 'custom') ?
+                                    (apiConfig.customTextModel || apiConfig.textModel || '未选择模型') :
                                     (apiConfig.textModel || '未选择模型')}
                             </div>
                             <button
@@ -2076,7 +2076,7 @@ export default function App() {
                         className="p-2 rounded-lg hover:bg-stone-800 transition-colors mr-2"
                         title="展开侧边栏"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
                     </button>
                     <span className="font-bold">猫叔 智能小说创作助手</span>
                     <span className="text-sm text-stone-400">{STEPS[currentStep].title}</span>

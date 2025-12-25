@@ -27,36 +27,36 @@ export const ENDING_TYPES = [
   { label: '现实[写实]', value: '现实' }
 ];
 
-export const PLOT_STRUCTURES = [ 
-    { id: 1, name: '三幕式结构（Three-Act Structure）', description: '第一幕：设定世界/角色登场/诱因事件\n第二幕：尝试/对抗/中点大事件/转折危机\n第三幕：高潮决战/问题解决/结尾收束' }, 
-    { id: 2, name: '四幕式结构（Four-Act Structure）', description: '第一幕：设定与诱因\n第二幕：初步尝试\n第三幕：危机升级\n第四幕：高潮解决与结尾' }, 
-    { id: 3, name: '五幕结构（Five-Act Structure）', description: '暴露（Exposition）\n上升动作（Rising Action）\n高潮（Climax）\n下降动作（Falling Action）\n结局（Denouement）' }, 
-    { id: 4, name: '英雄之旅（The Hero’s Journey / Monomyth）', description: '1. 平凡世界\n2. 冒险召唤\n3. 拒绝召唤\n4. 遇到导师\n5. 跨越门槛\n6. 试炼与盟友\n7. 接近洞穴\n8. 黑暗时刻（重大考验）\n9. 奖励\n10. 回归之路\n11. 最终考验\n12. 回归新生' }, 
-    { id: 5, name: 'Save the Cat! Beat Sheet（救猫咪节拍表）', description: '1. 开场画面\n2. 主题说明\n3. 设定世界\n4. 诱因\n5. 犹豫期\n6. 进入第二幕\n7. B故事\n8. 趣味游戏\n9. 中点\n10. 坏事成双\n11. 万念俱灰\n12. 灵感火花\n13. 进入第三幕\n14. 终极高潮\n15. 结尾画面' }, 
-    { id: 6, name: 'Sequence Approach（序列法）', description: 'Sequence 1：世界设定、角色与诱因\nSequence 2：主角初步反应\nSequence 3：新目标/首次尝试\nSequence 4：复杂困境\nSequence 5：中点大事件\nSequence 6：失败与新希望\nSequence 7：最后障碍\nSequence 8：高潮与结局' }, 
-    { id: 7, name: 'Dan Harmon的故事圆环（Story Circle）', description: '1. 角色处于舒适区\n2. 想要某物\n3. 进入陌生世界\n4. 适应新环境\n5. 得到想要的东西\n6. 为其付出代价\n7. 回归原处\n8. 获得成长/改变' }, 
-    { id: 8, name: '角色弧/成长驱动结构（Character-Driven/Arc Structure）', description: '角色起点（缺陷/困境）\n触发事件\n内心挣扎/对抗外界\n决策与行动\n转变/成长/失败\n终极自我实现' }, 
-    { id: 9, name: 'Index Cards（卡片法/场景卡片）', description: '按故事每个场景、节点写卡片\n时间/地点/事件/人物/动机逐卡分明\n可灵活排序组合，搭建完整故事流程' }, 
-    { id: 10, name: '嵌套/多线结构（Nested/Multiple Storylines）', description: '主线A（分多幕/事件/角色视角）\n主线B（分多幕/事件/角色视角）\n副线/支线\n交点/融合节点\n各线结局' }, 
-    { id: 11, name: '环状/非线性结构（Circular/Nonlinear Structure）', description: '主线事件（可跳时空/多次视角重叠）\n回溯片段/插叙/前后呼应节点\n关键节点反复出现或多时空对照\n尾声/终点呼应开头' }, 
-    { id: 12, name: '情感曲线结构（Emotional Arc Structure）', description: '角色情感初始状态\n触发情感波动\n情绪递进/冲突\n情感低谷/高峰\n内心和解/成长/共情释放' }, 
-    { id: 13, name: '事件驱动结构（Event-Driven Structure）', description: '大事件1（设定故事起点）\n大事件2（推进/反转）\n大事件3（危机升级）\n高潮事件\n结局' }, 
-    { id: 14, name: '短片集/章节式结构（Anthology/Chapter Structure）', description: '短片/章节1（独立故事/主题）\n短片/章节2\n……\n主题收束/隐形关联' }, 
-    { id: 15, name: '开放式/片段式结构（Open/Fragmented Structure）', description: '片段A（意象/场景/感受）\n片段B\n片段C\n……\n观众自我拼接意义/开放结局' }, 
-    { id: 16, name: '日记体/第一人称结构（Diary/First-person Structure）', description: '叙述者自白/心声\n关键事件回忆/现时\n情感/观点变化节点\n个人成长/世界观演变' }, 
-    { id: 17, name: '并行蒙太奇结构（Parallel Montage Structure）', description: '故事线1（起承转合）\n故事线2（同步推进）\n节奏交错/对照\n多线汇聚/共振高潮' }, 
-    { id: 18, name: '24小时/实时结构（Real-Time Structure）', description: '时间点A（故事起始时刻）\n时间点B（若干小时后/紧迫推进）\n每小时/分钟推进新事件\n最终节点（24小时内事件全收束）' }, 
-    { id: 19, name: '三点转折法（Three-Point Turning Structure）', description: '设定（Setup） 介绍世界、角色和故事基线\n第一转折（First Turning Point） 突发事件，推动故事进入新阶段\n第二转折（Second Turning Point） 再次剧烈变化，推进到高潮或反转\n结局（Resolution） 问题解决，人物或世界有新变化' }, 
-    { id: 20, name: 'Propp’s Functions（普罗普故事功能结构）', description: '前置功能（Preparation） 家庭成员、任务分配、警告\n核心功能（Core Functions） 恶人作恶、英雄离家、考验、奖励、回归\n后续功能（Aftermath） 英雄归来、揭露身份、幸福结局\n适用于童话、神话、传统故事，功能节点可自由组合' }, 
-    { id: 21, name: '雪花法（Snowflake Method）', description: '故事一行概述\n一段扩写\n三幕/五幕扩展（简要梗概）\n角色动机与弧线梳理\n详细场景卡片逐步扩展\n逐步填充细节直至完整剧本\n适合小说和剧本初稿规划，递进式细化' }, 
-    { id: 22, name: '分形/嵌套结构（Fractal/Nested Structure）', description: '主结构（主线/主弧）\n子结构1（副线/副弧）\n子结构2（插曲/嵌套回忆）\n层层递进，每个子结构又自成起承转合\n适合多层主题、复杂人物关系、大型系列片' }, 
-    { id: 23, name: '音乐剧本结构（Musical Structure）', description: '开场号角（Opening Number）\n主要人物歌（I Want Song）\n情感推进曲（Reprise/Ensemble）\n冲突爆发曲（11点钟歌）\n终曲（Finale）\n适合音乐剧、歌舞片，每首歌节点与剧情节点重合' }, 
-    { id: 24, name: '片段拼贴/意象流结构（Montage/Collage Structure）', description: '独立意象片段A/B/C…\n跨越时空、主题、人物\n观众自由拼接意义，整体氛围大于线性故事\n先锋文艺、诗性影像、实验电影常用' }, 
-    { id: 25, name: '循环往复结构（Looping Structure）', description: '主事件A→反复回归起点\n每次循环有微小改变/新信息\n角色成长或打破循环\n最终破圈/陷入无限循环结局\n如《土拨鼠之日》《源代码》《恐怖游轮》' }, 
-    { id: 26, name: '诗性结构（Poetic Structure）', description: '主题句（Motif）\n诗化画面/象征性场景\n自由联想，不强调逻辑顺序\n情感/意象/哲理反复强化\n文艺短片、实验影像，重氛围、轻叙事' }, 
-    { id: 27, name: '任务型结构（Quest Structure）', description: '收到任务/目标\n组队/分工/困难重重\n达成目标/失败反转\n人物关系随任务推进变化\n冒险片、侦破片、团队成长故事' }, 
-    { id: 28, name: '嵌套梦境/多重现实结构（Nested Dream/Multiple Reality Structure）', description: '现实层1\n梦境/幻想层2\n层层递进/穿插回溯\n真假交错/多重结局\n如《盗梦空间》《黑客帝国》' }, 
-    { id: 29, name: '线性解谜结构（Linear Mystery Structure）', description: '案件设定\n嫌疑线索\n调查推进\n推理高潮\n真相揭晓\n侦探片、悬疑片、推理剧经典范式' } 
+export const PLOT_STRUCTURES = [
+  { id: 1, name: '三幕式结构（Three-Act Structure）', description: '第一幕：设定世界/角色登场/诱因事件\n第二幕：尝试/对抗/中点大事件/转折危机\n第三幕：高潮决战/问题解决/结尾收束' },
+  { id: 2, name: '四幕式结构（Four-Act Structure）', description: '第一幕：设定与诱因\n第二幕：初步尝试\n第三幕：危机升级\n第四幕：高潮解决与结尾' },
+  { id: 3, name: '五幕结构（Five-Act Structure）', description: '暴露（Exposition）\n上升动作（Rising Action）\n高潮（Climax）\n下降动作（Falling Action）\n结局（Denouement）' },
+  { id: 4, name: '英雄之旅（The Hero’s Journey / Monomyth）', description: '1. 平凡世界\n2. 冒险召唤\n3. 拒绝召唤\n4. 遇到导师\n5. 跨越门槛\n6. 试炼与盟友\n7. 接近洞穴\n8. 黑暗时刻（重大考验）\n9. 奖励\n10. 回归之路\n11. 最终考验\n12. 回归新生' },
+  { id: 5, name: 'Save the Cat! Beat Sheet（救猫咪节拍表）', description: '1. 开场画面\n2. 主题说明\n3. 设定世界\n4. 诱因\n5. 犹豫期\n6. 进入第二幕\n7. B故事\n8. 趣味游戏\n9. 中点\n10. 坏事成双\n11. 万念俱灰\n12. 灵感火花\n13. 进入第三幕\n14. 终极高潮\n15. 结尾画面' },
+  { id: 6, name: 'Sequence Approach（序列法）', description: 'Sequence 1：世界设定、角色与诱因\nSequence 2：主角初步反应\nSequence 3：新目标/首次尝试\nSequence 4：复杂困境\nSequence 5：中点大事件\nSequence 6：失败与新希望\nSequence 7：最后障碍\nSequence 8：高潮与结局' },
+  { id: 7, name: 'Dan Harmon的故事圆环（Story Circle）', description: '1. 角色处于舒适区\n2. 想要某物\n3. 进入陌生世界\n4. 适应新环境\n5. 得到想要的东西\n6. 为其付出代价\n7. 回归原处\n8. 获得成长/改变' },
+  { id: 8, name: '角色弧/成长驱动结构（Character-Driven/Arc Structure）', description: '角色起点（缺陷/困境）\n触发事件\n内心挣扎/对抗外界\n决策与行动\n转变/成长/失败\n终极自我实现' },
+  { id: 9, name: 'Index Cards（卡片法/场景卡片）', description: '按故事每个场景、节点写卡片\n时间/地点/事件/人物/动机逐卡分明\n可灵活排序组合，搭建完整故事流程' },
+  { id: 10, name: '嵌套/多线结构（Nested/Multiple Storylines）', description: '主线A（分多幕/事件/角色视角）\n主线B（分多幕/事件/角色视角）\n副线/支线\n交点/融合节点\n各线结局' },
+  { id: 11, name: '环状/非线性结构（Circular/Nonlinear Structure）', description: '主线事件（可跳时空/多次视角重叠）\n回溯片段/插叙/前后呼应节点\n关键节点反复出现或多时空对照\n尾声/终点呼应开头' },
+  { id: 12, name: '情感曲线结构（Emotional Arc Structure）', description: '角色情感初始状态\n触发情感波动\n情绪递进/冲突\n情感低谷/高峰\n内心和解/成长/共情释放' },
+  { id: 13, name: '事件驱动结构（Event-Driven Structure）', description: '大事件1（设定故事起点）\n大事件2（推进/反转）\n大事件3（危机升级）\n高潮事件\n结局' },
+  { id: 14, name: '短片集/章节式结构（Anthology/Chapter Structure）', description: '短片/章节1（独立故事/主题）\n短片/章节2\n……\n主题收束/隐形关联' },
+  { id: 15, name: '开放式/片段式结构（Open/Fragmented Structure）', description: '片段A（意象/场景/感受）\n片段B\n片段C\n……\n观众自我拼接意义/开放结局' },
+  { id: 16, name: '日记体/第一人称结构（Diary/First-person Structure）', description: '叙述者自白/心声\n关键事件回忆/现时\n情感/观点变化节点\n个人成长/世界观演变' },
+  { id: 17, name: '并行蒙太奇结构（Parallel Montage Structure）', description: '故事线1（起承转合）\n故事线2（同步推进）\n节奏交错/对照\n多线汇聚/共振高潮' },
+  { id: 18, name: '24小时/实时结构（Real-Time Structure）', description: '时间点A（故事起始时刻）\n时间点B（若干小时后/紧迫推进）\n每小时/分钟推进新事件\n最终节点（24小时内事件全收束）' },
+  { id: 19, name: '三点转折法（Three-Point Turning Structure）', description: '设定（Setup） 介绍世界、角色和故事基线\n第一转折（First Turning Point） 突发事件，推动故事进入新阶段\n第二转折（Second Turning Point） 再次剧烈变化，推进到高潮或反转\n结局（Resolution） 问题解决，人物或世界有新变化' },
+  { id: 20, name: 'Propp’s Functions（普罗普故事功能结构）', description: '前置功能（Preparation） 家庭成员、任务分配、警告\n核心功能（Core Functions） 恶人作恶、英雄离家、考验、奖励、回归\n后续功能（Aftermath） 英雄归来、揭露身份、幸福结局\n适用于童话、神话、传统故事，功能节点可自由组合' },
+  { id: 21, name: '雪花法（Snowflake Method）', description: '故事一行概述\n一段扩写\n三幕/五幕扩展（简要梗概）\n角色动机与弧线梳理\n详细场景卡片逐步扩展\n逐步填充细节直至完整剧本\n适合小说和剧本初稿规划，递进式细化' },
+  { id: 22, name: '分形/嵌套结构（Fractal/Nested Structure）', description: '主结构（主线/主弧）\n子结构1（副线/副弧）\n子结构2（插曲/嵌套回忆）\n层层递进，每个子结构又自成起承转合\n适合多层主题、复杂人物关系、大型系列片' },
+  { id: 23, name: '音乐剧本结构（Musical Structure）', description: '开场号角（Opening Number）\n主要人物歌（I Want Song）\n情感推进曲（Reprise/Ensemble）\n冲突爆发曲（11点钟歌）\n终曲（Finale）\n适合音乐剧、歌舞片，每首歌节点与剧情节点重合' },
+  { id: 24, name: '片段拼贴/意象流结构（Montage/Collage Structure）', description: '独立意象片段A/B/C…\n跨越时空、主题、人物\n观众自由拼接意义，整体氛围大于线性故事\n先锋文艺、诗性影像、实验电影常用' },
+  { id: 25, name: '循环往复结构（Looping Structure）', description: '主事件A→反复回归起点\n每次循环有微小改变/新信息\n角色成长或打破循环\n最终破圈/陷入无限循环结局\n如《土拨鼠之日》《源代码》《恐怖游轮》' },
+  { id: 26, name: '诗性结构（Poetic Structure）', description: '主题句（Motif）\n诗化画面/象征性场景\n自由联想，不强调逻辑顺序\n情感/意象/哲理反复强化\n文艺短片、实验影像，重氛围、轻叙事' },
+  { id: 27, name: '任务型结构（Quest Structure）', description: '收到任务/目标\n组队/分工/困难重重\n达成目标/失败反转\n人物关系随任务推进变化\n冒险片、侦破片、团队成长故事' },
+  { id: 28, name: '嵌套梦境/多重现实结构（Nested Dream/Multiple Reality Structure）', description: '现实层1\n梦境/幻想层2\n层层递进/穿插回溯\n真假交错/多重结局\n如《盗梦空间》《黑客帝国》' },
+  { id: 29, name: '线性解谜结构（Linear Mystery Structure）', description: '案件设定\n嫌疑线索\n调查推进\n推理高潮\n真相揭晓\n侦探片、悬疑片、推理剧经典范式' }
 ];
 
 export const NARRATIVE_PERSPECTIVES = [
@@ -102,12 +102,12 @@ Prompt: 网文选题·生死判官 (V3.0 原创特供版)
 角色定位
 你是一位痛恨同质化、拥有极高商业敏锐度的网文金牌主编。你深知在现在的算法推荐机制下，“跟风”只能吃残羹冷炙，只有**“微创新”和“反套路”才能成为爆款。你的职责是无情粉碎那些烂大街的陈旧套路，并逼迫作者（和自己）产出市场上从未见过**的原创脑洞。
 任务目标
-扫雷判死刑： 对陈旧、无趣、逻辑自嗨的题材直接劝退。
+扫雷判死刑： 对陈旧、无趣、逻辑自嗨的题材直接劝退。**必须深度结合用户选择的【题材分类】进行评判，例如：若是“历史”，要看是否跳出了传统争霸/科举；若是“玄幻”，要看是否打破了传统升级体系。**
 强制创新： 在提供“魔改方案”时，严禁直接套用市面上已有的爆款书名或设定（如单纯的签到、单纯的战神）。
 构建蓝海： 利用“因果倒置”、“身份错位”、“跨界打击”等技巧，生成3个完全不同且具备原创性的S级开书方案。
 目标用户
 用户画像： 渴望突破瓶颈、寻找差异化竞争力的商业网文作者。
-核心痛点： 写的全是老梗，缺乏新意，点击率低，不知道如何旧瓶装新酒。
+核心痛点： 写的全是老梗，缺乏新意，点击率低，不知道如何旧瓶新酒。
 审核规则库 (原创性执法标准)
 1. 拒绝陈词滥调 (Kill List)
 严禁普通签到： 如果金手指只是“叮！获得XXX”，视为垃圾设定。必须加上限制、代价或奇葩机制。
@@ -117,19 +117,31 @@ Prompt: 网文选题·生死判官 (V3.0 原创特供版)
 逻辑反转： 把“系统给主角送钱”改成“系统欠主角钱/主角剥削系统”。
 因果错位： 把“先修炼后变强”改成“先变强了但自己不知道/以为自己很弱”。
 跨服打击： 把“修仙打修仙”改成“克苏鲁打修仙/科幻二向箔打修仙/规则怪谈打修仙”。
+极端情境： 把“主角在宗门修炼”改成“主角在时间循环/末日倒计时/全员恶人的监狱中修炼”。
+概念实体化： 把“恐惧/谎言/运气”变成可交易、可修炼、可具现的具体货币或力量体系。
 输出要求
 风格：
 毒舌且极客： 像一个追求极致创意的产品经理，对平庸零容忍。
 拒绝行活： 不要给出模棱两可的建议，必须给出具体到画面感的独家设定。
 结构：
 【市场定级】： (S/A/B/C) + 原创性评分 (0-10分)。
-【套路粉碎机】： 无情指出该题材撞了哪本老书的梗，为什么现在写必死。
+【套路粉碎机】： 无情指出该题材撞了哪本老书的梗，为什么现在写必死。**必须列出该【题材分类】下的三大烂大街套路，并指出用户设定是否踩雷。**
 如果提供了当前核心DNA，请同时分析核心DNA的优缺点和改进空间。
 【原创S级魔改】 (核心任务)：
 必须提供 3个 截然不同的原创方案。
-每个方案必须标注：
+**严禁使用其他格式，必须严格按照以下格式输出每个方案（包括方括号）：**
+【方案1：方案名称】
 1. **【创新手法】**（如：逻辑重构、核心痛点颠覆）
 2. **【核心DNA重写建议】**：严格针对核心DNA进行重写建议，必须具体、可操作，与核心DNA紧密相关。
+
+【方案2：方案名称】
+1. **【创新手法】**（如：逻辑重构、核心痛点颠覆）
+2. **【核心DNA重写建议】**：严格针对核心DNA进行重写建议，必须具体、可操作，与核心DNA紧密相关。
+
+【方案3：方案名称】
+1. **【创新手法】**（如：逻辑重构、核心痛点颠覆）
+2. **【核心DNA重写建议】**：严格针对核心DNA进行重写建议，必须具体、可操作，与核心DNA紧密相关。
+
 质量标准
 必须有：
 独特性验证： 生成的脑洞必须是你在当前通用网文市场上很少见到的。
