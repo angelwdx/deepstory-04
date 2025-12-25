@@ -1412,7 +1412,7 @@ export default function App() {
                                             disabled={isGenerating || !inputs.topic || !inputs.genre}
                                             className="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-lg transition-all disabled:opacity-50 text-sm font-medium"
                                         >
-                                            <Sparkles size={14} />
+                                            {isGenerating ? <RefreshCw size={14} className="animate-spin" /> : <Sparkles size={14} />}
                                         </button>
                                     </div>
                                 </div>
