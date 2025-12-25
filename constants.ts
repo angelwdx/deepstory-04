@@ -509,36 +509,36 @@ Prompt: 网文选题·生死判官 (V4.0 独家公式版)
 
 ## 输入信息
 
-  ** 基础设定：**
-    - 小说名称：{ novel_title }
+** 基础设定：**
+- 小说名称：{ novel_title }
 - 核心脑洞：{ topic }
 - 题材分类：{ genre }
 
 ** 叙事风格：**
-  - 叙事视角：{ perspective }
+- 叙事视角：{ perspective }
 - 故事基调：{ tone }
 - 结局倾向：{ ending }
 
 ** 篇幅规划：**
-  - 预计章节数：{ number_of_chapters } 章
-    - 每章字数：{ word_count } 汉字
+- 预计章节数：{ number_of_chapters } 章
+- 每章字数：{ word_count } 汉字
 
-      ** 特殊要求：**
-        - 自定义特殊要求：{ custom_requirements }
+** 特殊要求：**
+- 自定义特殊要求：{ custom_requirements }
 - 修改指令：{ custom_instruction }
 
 ### 生成结果（严格按照如下格式输出，不要输出多余的内容）
 
 ## 基础设定(BASIC_SETTINGS)
-  - 小说名称：{ novel_title }
+- 小说名称：{ novel_title }
 - 核心脑洞：{ topic }
 - 题材分类：{ genre }
 - 叙事视角：{ perspective }
 - 故事基调：{ tone }
 - 结局倾向：{ ending }
 - 预计章节数：{ number_of_chapters } 章
-  - 每章字数：{ word_count } 汉字
-    - 自定义特殊要求：{ custom_requirements }
+- 每章字数：{ word_count } 汉字
+- 自定义特殊要求：{ custom_requirements }
 
 ## 核心DNA(STORY_DNA)
 当[具体的主角描述]遭遇[核心冲突事件]，必须[关键行动选择]，否则[具体的灾难后果]；与此同时，[隐藏的更大危机]正在悄然发酵。
@@ -550,15 +550,15 @@ Prompt: 网文选题·生死判官 (V4.0 独家公式版)
 ## 指令
 基于已确定的故事核心DNA，** 简洁高效地 ** 设计3 - 6个具有明确驱动力和相互冲突关系的核心角色。
 ** 重要要求：**
-  1. 严格按照输出格式生成，不要添加额外解释
+1. 严格按照输出格式生成，不要添加额外解释
 2. 每个角色信息保持简洁，重点突出核心特征
 3. 确保角色之间存在明确的冲突和联系
 4. 如果提供了【自定义修改要求】，请务必优先实现
 
 ## 输入信息
-  - 核心DNA：{ STORY_DNA }
+- 核心DNA：{ STORY_DNA }
 - 自定义特殊要求：{ custom_requirements }
-- ** 自定义修改要求 **：{ custom_instruction }
+- 自定义修改要求：{ custom_instruction }
 
 ### 生成结果
 \`\`\`

@@ -418,7 +418,7 @@ export const generateSpeech = async (text: string, config?: ApiConfig) => {
 };
 
 export const formatPrompt = (template: string, variables: Record<string, any>) => {
-    return template.replace(/\{([a-zA-Z0-9_]+)\}/g, (match, key) => {
+    return template.replace(/\{\s*([a-zA-Z0-9_]+)\s*\}/g, (match, key) => {
         const value = variables[key];
         return value !== undefined && value !== null ? String(value) : match;
     });

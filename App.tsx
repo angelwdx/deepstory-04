@@ -49,7 +49,7 @@ export default function App() {
 
     const [apiConfig, setApiConfig] = useState<ApiConfig>({
         provider: 'google',
-        baseUrl: 'https://gemini.txtbg.cn',
+        baseUrl: 'https://generativelanguage.googleapis.com',
         apiKey: '',
         textModel: 'gemini-2.5-flash'
     });
@@ -423,45 +423,45 @@ export default function App() {
         const settings: Partial<UserInputs> = {};
 
         // 小说名称
-        const novelTitleMatch = basicSettingsText.match(/小说名称：([^\n]+)/);
+        const novelTitleMatch = basicSettingsText.match(/小说名称\s*[:：]\s*([^\n]+)/);
         if (novelTitleMatch) {
             settings.novelTitle = novelTitleMatch[1].trim();
         }
 
         // 故事基调
-        const toneMatch = basicSettingsText.match(/故事基调：([^\n]+)/);
+        const toneMatch = basicSettingsText.match(/故事基调\s*[:：]\s*([^\n]+)/);
         if (toneMatch) {
             settings.tone = toneMatch[1].trim();
         }
 
         // 结局倾向
-        const endingMatch = basicSettingsText.match(/结局倾向：([^\n]+)/);
+        const endingMatch = basicSettingsText.match(/结局倾向\s*[:：]\s*([^\n]+)/);
         if (endingMatch) {
             settings.ending = endingMatch[1].trim();
         }
 
         // 叙事视角
-        const perspectiveMatch = basicSettingsText.match(/叙事视角：([^\n]+)/);
+        const perspectiveMatch = basicSettingsText.match(/叙事视角\s*[:：]\s*([^\n]+)/);
         if (perspectiveMatch) {
             settings.perspective = perspectiveMatch[1].trim();
         }
 
         // 预计章节数
-        const chaptersMatch = basicSettingsText.match(/预计章节数：(\d+)章/);
+        const chaptersMatch = basicSettingsText.match(/预计章节数\s*[:：]\s*(\d+)/);
         if (chaptersMatch) {
             settings.numberOfChapters = parseInt(chaptersMatch[1], 10);
         }
 
         // 每章字数
-        const wordCountMatch = basicSettingsText.match(/每章字数：(\d+)字/);
+        const wordCountMatch = basicSettingsText.match(/每章字数\s*[:：]\s*(\d+)/);
         if (wordCountMatch) {
             settings.wordCount = parseInt(wordCountMatch[1], 10);
         }
 
         // 自定义特殊要求
-        const customReqMatch = basicSettingsText.match(/自定义特殊要求：([^\n]+)/);
-        if (customReqMatch) {
-            settings.customRequirements = customReqMatch[1].trim();
+        const customMatch = basicSettingsText.match(/自定义特殊要求\s*[:：]\s*([^\n]+)/);
+        if (customMatch) {
+            settings.customRequirements = customMatch[1].trim();
         }
 
         return { basicSettings: settings, coreDNA: coreDNAText };
