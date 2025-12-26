@@ -5,6 +5,8 @@
   --font-sans: "Inter", "system-ui", "sans-serif";
   --font-serif: "Noto Serif SC", "Playfair Display", "serif";
   --font-hand: "Ma Shan Zheng", "Caveat", "cursive";
+
+  --breakpoint-md: 768px;
 }
 
 /* Global Custom Scrollbar */
@@ -38,5 +40,14 @@
   * {
     scrollbar-width: thin;
     scrollbar-color: #d6d3d1 #fafaf9;
+  }
+}
+
+/* Sidebar Fix for Tailwind 4 Breakpoints */
+@media (min-width: 768px) {
+  .sidebar-desktop-visible {
+    position: static !important;
+    transform: none !important;
+    display: flex !important;
   }
 }
