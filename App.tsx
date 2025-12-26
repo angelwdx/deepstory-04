@@ -1982,7 +1982,7 @@ export default function App() {
             )}
 
             {/* Sidebar - Minimalist White Design */}
-            <div className={`w-56 sm:w-64 bg-white border-r border-gray-100 flex flex-col fixed inset-y-0 left-0 z-20 transform transition-transform duration-300 md:static md:transform-none ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:flex shadow-sm sidebar-desktop-visible`}>
+            <div className={`w-56 sm:w-64 bg-white border-r border-gray-100 flex flex-col fixed inset-y-0 left-0 z-20 transform transition-transform duration-300 md:static md:translate-x-0 md:transform-none ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:flex shadow-sm sidebar-desktop-visible`}>
                 <div className="p-8 border-b border-gray-100 flex flex-col items-center">
                     <img
                         src="/favicon.png"

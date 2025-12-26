@@ -44,10 +44,13 @@
 }
 
 /* Sidebar Fix for Tailwind 4 Breakpoints */
+/* CRITICAL: Tailwind 4 uses native CSS 'translate' property */
 @media (min-width: 768px) {
   .sidebar-desktop-visible {
     position: static !important;
     transform: none !important;
+    translate: none !important;
+    /* Reset native CSS translate used by TW4 */
     display: flex !important;
   }
 }
